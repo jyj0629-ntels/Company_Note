@@ -1,0 +1,26 @@
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Nginx 설치 + 기본 유틸
+RUN apt-get update && apt-get install -y \
+    nginx \
+    curl \
+    ca-certificates \
+    net-tools \
+    iputils-ping \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Nginx 포트 변경 (80 → 8989)
+RUN sed -i 's/listen 80 default_server;/listen 8989 default_server;/g' /etc/nginx/sites-available/default \
+    && sed -i 's/listen \[::\]:80 default_server;/listen [::]:8989 default_server;/g' /etc/nginx/sites-available/default
+
+# index.html 생성
+RUN echo "Node1 Port 8989" > /var/www/html/index.html
+
+# 포트 오픈
+EXPOSE 8989
+
+# Nginx 실행 (포그라운드)
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,6 +1,4 @@
-<UPM>
-
-<table>
+[UPM Apache Config 설정 필요 위치]
 /pm/web/apache-2.2.27/conf/httpd.conf
 /pm/web/apache-2.2.27/conf/extra/httpd-mpm.conf
 /pm/web/apache-2.2.27/conf/extra/httpd-modjk.conf
@@ -14,4 +12,3 @@
 curl -k "https://127.0.0.1/api/10/clientService/checkServerStatus"
 curl -k "http://127.0.0.1:8080/api/10/clientService/checkServerStatus"
 curl -k "http://127.0.0.1:18080/api/clientService/checkServerStatus"
-</table>

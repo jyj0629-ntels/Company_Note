@@ -1,0 +1,45 @@
+[HFC PG 연동 설정 정보 변경 Query]
+
+select * from t_pm_configuration where conf_id like 'BAROD_PG_SOCKET_INFO%';
+
+<Old PG>
+update t_pm_configuration set CONF_VALUE = '172.1.128.25|10506' where conf_id = 'BAROD_PG_SOCKET_INFO_SS1';
+update t_pm_configuration set CONF_VALUE = '' where conf_id = 'BAROD_PG_SOCKET_INFO_SS2';
+update t_pm_configuration set CONF_VALUE = '' where conf_id = 'BAROD_PG_SOCKET_INFO_DS1';
+update t_pm_configuration set CONF_VALUE = '' where conf_id = 'BAROD_PG_SOCKET_INFO_DS2';
+
+<New PG>
+update t_pm_configuration set CONF_VALUE = '60.30.133.120|10506' where conf_id = 'BAROD_PG_SOCKET_INFO_SS1';
+update t_pm_configuration set CONF_VALUE = '' where conf_id = 'BAROD_PG_SOCKET_INFO_SS2';
+update t_pm_configuration set CONF_VALUE = '' where conf_id = 'BAROD_PG_SOCKET_INFO_DS1';
+update t_pm_configuration set CONF_VALUE = '' where conf_id = 'BAROD_PG_SOCKET_INFO_DS2';
+
+<원복>
+update t_pm_configuration set CONF_VALUE = '50.10.23.128|11080' where conf_id = 'BAROD_PG_SOCKET_INFO_DS1';
+
+
+
+<기지국 갯수>
+| BAROD     | T_MAP_SELECT_LIMIT                    | 130                                                          | 기지국 조회 최대 갯수                                                                   | Y  
+
+update t_pm_configuration set CONF_VALUE = '130' where conf_id = 'T_MAP_SELECT_LIMIT';
+
+<가입자 번호>
+select * from t_barod_sub_list;
+update t_barod_sub_list set mdn = '01029922739', cell_list ='' where mdn = '01081010101';
+update t_barod_sub_list set cell_list ='', send_yn = 'Y', use_yn = 'Y';
+
+
+curl -k "http://localhost/barod/getCellFromAllUser?pmr=AL"
+
+
+
+
+| BAROD     | BAROD_PG_SEND_PRIMARY                 | 60.30.133.120                                                | send first PG host_name                                                                 | Y       |
+| BAROD     | BAROD_PG_SEND_SECONDARY               | 50.10.23.128                                                 | send second PG host_name                                                                | Y       |
+
+update t_pm_configuration set CONF_VALUE = '172.1.128.25' where conf_id = 'BAROD_PG_SEND_PRIMARY';
+update t_pm_configuration set CONF_VALUE = '60.30.133.120' where conf_id = 'BAROD_PG_SEND_SECONDARY';
+
+update t_pm_configuration set CONF_VALUE = '60.30.133.120' where conf_id = 'BAROD_PG_SEND_PRIMARY';
+update t_pm_configuration set CONF_VALUE = '50.10.23.128' where conf_id = 'BAROD_PG_SEND_SECONDARY';

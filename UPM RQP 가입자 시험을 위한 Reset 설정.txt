@@ -1,0 +1,8 @@
+[UPM RQP 가입자 시험을 위한 Reset 설정]
+select count(*) from t_barod_sub_list;
+select count(*) from t_barod_rqp_hist;
+
+truncate t_barod_sub_list;
+delete from t_barod_rqp_hist where req_date like '20260313%';
+
+date -s "2026-03-13 20:45:20"
